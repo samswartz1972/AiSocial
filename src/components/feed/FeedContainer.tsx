@@ -162,99 +162,99 @@ const FeedContainer = ({
               Discover
             </TabsTrigger>
           </TabsList>
+
+          <ScrollArea className="flex-1 p-4">
+            <TabsContent value="for-you" className="mt-0 space-y-4">
+              {filteredPosts.length > 0 ? (
+                filteredPosts.map((post) => <Post key={post.id} {...post} />)
+              ) : (
+                <div className="text-center py-10">
+                  <p className="text-muted-foreground">No posts found</p>
+                  <Button variant="outline" className="mt-4">
+                    Refresh Feed
+                  </Button>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="following" className="mt-0">
+              <div className="text-center py-10">
+                <p className="text-muted-foreground mb-2">
+                  Follow creators to see their posts here
+                </p>
+                <Button variant="outline" className="mt-2">
+                  Find People to Follow
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="trending" className="mt-0">
+              <div className="space-y-4">
+                {filteredPosts
+                  .sort((a, b) => b.interactions.likes - a.interactions.likes)
+                  .slice(0, 2)
+                  .map((post) => (
+                    <Post key={post.id} {...post} />
+                  ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="discover" className="mt-0">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium mb-3">Suggested for you</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div
+                        key={i}
+                        className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800"
+                      >
+                        <img
+                          src={`https://images.unsplash.com/photo-${1570000000000 + i * 1000}?w=300&q=80`}
+                          alt="Discover content"
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="p-2">
+                          <p className="text-sm font-medium truncate">
+                            Discover new AI art #{i}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div>
+                  <h3 className="font-medium mb-3">Popular creators</h3>
+                  <div className="flex gap-4 overflow-x-auto pb-2">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <div key={i} className="flex flex-col items-center">
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary">
+                          <img
+                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=creator${i}`}
+                            alt={`Creator ${i}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <p className="text-sm mt-1 font-medium">Creator {i}</p>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="mt-1 text-xs h-7 px-2"
+                        >
+                          Follow
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </ScrollArea>
         </Tabs>
       </div>
-
-      <ScrollArea className="flex-1 p-4">
-        <TabsContent value="for-you" className="mt-0 space-y-4">
-          {filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => <Post key={post.id} {...post} />)
-          ) : (
-            <div className="text-center py-10">
-              <p className="text-muted-foreground">No posts found</p>
-              <Button variant="outline" className="mt-4">
-                Refresh Feed
-              </Button>
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="following" className="mt-0">
-          <div className="text-center py-10">
-            <p className="text-muted-foreground mb-2">
-              Follow creators to see their posts here
-            </p>
-            <Button variant="outline" className="mt-2">
-              Find People to Follow
-            </Button>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="trending" className="mt-0">
-          <div className="space-y-4">
-            {filteredPosts
-              .sort((a, b) => b.interactions.likes - a.interactions.likes)
-              .slice(0, 2)
-              .map((post) => (
-                <Post key={post.id} {...post} />
-              ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="discover" className="mt-0">
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-medium mb-3">Suggested for you</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800"
-                  >
-                    <img
-                      src={`https://images.unsplash.com/photo-${1570000000000 + i * 1000}?w=300&q=80`}
-                      alt="Discover content"
-                      className="w-full h-32 object-cover"
-                    />
-                    <div className="p-2">
-                      <p className="text-sm font-medium truncate">
-                        Discover new AI art #{i}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h3 className="font-medium mb-3">Popular creators</h3>
-              <div className="flex gap-4 overflow-x-auto pb-2">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary">
-                      <img
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=creator${i}`}
-                        alt={`Creator ${i}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <p className="text-sm mt-1 font-medium">Creator {i}</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-1 text-xs h-7 px-2"
-                    >
-                      Follow
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </TabsContent>
-      </ScrollArea>
 
       <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex justify-center">
         <CreatePostButton
