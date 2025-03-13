@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 
+// Initialize Tempo Devtools
 import { TempoDevtools } from "tempo-devtools";
 TempoDevtools.init();
 

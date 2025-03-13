@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./layout/Navbar";
+import { Link } from "react-router-dom";
+import Layout from "./layout/Layout";
 import AuthForm from "./auth/AuthForm";
 import FeedContainer from "./feed/FeedContainer";
 import ProfileSidebar from "./profile/ProfileSidebar";
 import PostCreationModal from "./post/PostCreationModal";
+import FeatureNavigation from "./navigation/FeatureNavigation";
 import { useMediaQuery } from "../lib/utils";
+import { Button } from "./ui/button";
 
 const Home = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -66,24 +69,20 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      {/* Navbar */}
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        isDarkMode={isDarkMode}
-        onThemeToggle={handleThemeToggle}
-        onLogin={handleLogin}
-        onSignup={handleSignup}
-        onLogout={handleLogout}
-        onCreatePost={handleCreatePost}
-        user={{
-          name: "Jane Cooper",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
-        }}
-      />
-
-      {/* Main Content */}
-      <main className="pt-20 pb-10 px-4 md:px-6 max-w-7xl mx-auto">
+    <Layout
+      isAuthenticated={isAuthenticated}
+      isDarkMode={isDarkMode}
+      onThemeToggle={handleThemeToggle}
+      onLogin={handleLogin}
+      onSignup={handleSignup}
+      onLogout={handleLogout}
+      onCreatePost={handleCreatePost}
+      user={{
+        name: "Jane Cooper",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
+      }}
+    >
+      <div className="w-full max-w-7xl mx-auto">
         {!isAuthenticated ? (
           // Non-authenticated view
           <div className="flex flex-col items-center justify-center min-h-[80vh]">
@@ -108,9 +107,10 @@ const Home = () => {
                     Generate stunning images with our AI tools. No design skills
                     required.
                   </p>
-                  <button
+                  <Button
                     onClick={handleSignup}
-                    className="text-primary font-medium flex items-center"
+                    variant="link"
+                    className="text-primary font-medium flex items-center p-0"
                   >
                     Get started
                     <svg
@@ -127,7 +127,7 @@ const Home = () => {
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
 
@@ -145,9 +145,10 @@ const Home = () => {
                     Transform your ideas into engaging videos with our AI video
                     generator.
                   </p>
-                  <button
+                  <Button
                     onClick={handleSignup}
-                    className="text-primary font-medium flex items-center"
+                    variant="link"
+                    className="text-primary font-medium flex items-center p-0"
                   >
                     Learn more
                     <svg
@@ -164,43 +165,47 @@ const Home = () => {
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
 
             <div className="mt-12">
-              <button
+              <Button
                 onClick={handleSignup}
-                className="bg-primary text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-primary/90 transition-colors"
+                className="px-8 py-6 rounded-full text-lg"
               >
                 Join SocialAI Today
-              </button>
+              </Button>
               <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
-                <button
+                <Button
                   onClick={handleLogin}
-                  className="text-primary font-medium hover:underline"
+                  variant="link"
+                  className="p-0 font-medium"
                 >
                   Log in
-                </button>
+                </Button>
               </p>
             </div>
           </div>
         ) : (
-          // Authenticated view - Feed and Sidebar
-          <div className="flex flex-col md:flex-row gap-6">
-            {!isMobile && (
-              <div className="hidden md:block">
-                <ProfileSidebar />
+          // Authenticated view
+          <div className="pt-6">
+            <FeatureNavigation currentFeature="home" />
+            <div className="flex flex-col md:flex-row gap-6 mt-6">
+              {!isMobile && (
+                <div className="hidden md:block">
+                  <ProfileSidebar />
+                </div>
+              )}
+              <div className="flex-1 flex justify-center">
+                <FeedContainer />
               </div>
-            )}
-            <div className="flex-1 flex justify-center">
-              <FeedContainer />
             </div>
           </div>
         )}
-      </main>
+      </div>
 
       {/* Auth Modal */}
       {showAuthForm && (
@@ -244,7 +249,7 @@ const Home = () => {
           onPost={handlePostSubmit}
         />
       )}
-    </div>
+    </Layout>
   );
 };
 

@@ -2,11 +2,32 @@ import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Progress } from "../ui/progress";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Search, Filter, Gamepad2, Trophy, Users, Star, Clock, ArrowLeft } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
+  Search,
+  Filter,
+  Gamepad2,
+  Trophy,
+  Users,
+  Star,
+  Clock,
+  ArrowLeft,
+} from "lucide-react";
 
 interface Game {
   id: string;
@@ -39,8 +60,10 @@ const GameCenter = ({
     {
       id: "1",
       title: "AI Image Guessing Challenge",
-      description: "Guess what the AI was prompted to create in these images. Test your AI knowledge!",
-      image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
+      description:
+        "Guess what the AI was prompted to create in these images. Test your AI knowledge!",
+      image:
+        "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80",
       category: "quiz",
       difficulty: "medium" as const,
       players: {
@@ -57,8 +80,10 @@ const GameCenter = ({
     {
       id: "2",
       title: "Prompt Master",
-      description: "Create the best prompts to match the target image. Compete with friends to see who's the prompt master!",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",
+      description:
+        "Create the best prompts to match the target image. Compete with friends to see who's the prompt master!",
+      image:
+        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80",
       category: "creativity",
       difficulty: "hard" as const,
       players: {
@@ -75,8 +100,10 @@ const GameCenter = ({
     {
       id: "3",
       title: "AI Art Memory Match",
-      description: "Classic memory game with AI-generated art. Match pairs of images to win!",
-      image: "https://images.unsplash.com/photo-1614102073832-030967418971?w=600&q=80",
+      description:
+        "Classic memory game with AI-generated art. Match pairs of images to win!",
+      image:
+        "https://images.unsplash.com/photo-1614102073832-030967418971?w=600&q=80",
       category: "memory",
       difficulty: "easy" as const,
       players: {
@@ -93,8 +120,10 @@ const GameCenter = ({
     {
       id: "4",
       title: "AI Style Transfer Race",
-      description: "Race against time to apply the right style transfers to images. Fast-paced fun!",
-      image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=600&q=80",
+      description:
+        "Race against time to apply the right style transfers to images. Fast-paced fun!",
+      image:
+        "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=600&q=80",
       category: "action",
       difficulty: "medium" as const,
       players: {
@@ -111,8 +140,10 @@ const GameCenter = ({
     {
       id: "5",
       title: "AI Trivia Challenge",
-      description: "Test your knowledge about AI, machine learning, and technology with this fun trivia game.",
-      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80",
+      description:
+        "Test your knowledge about AI, machine learning, and technology with this fun trivia game.",
+      image:
+        "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80",
       category: "quiz",
       difficulty: "medium" as const,
       players: {
@@ -129,8 +160,10 @@ const GameCenter = ({
     {
       id: "6",
       title: "Pixel Art Creator",
-      description: "Create pixel art with AI assistance and compete with others for the best creation.",
-      image: "https://images.unsplash.com/photo-1633350954377-8c975ca91e46?w=600&q=80",
+      description:
+        "Create pixel art with AI assistance and compete with others for the best creation.",
+      image:
+        "https://images.unsplash.com/photo-1633350954377-8c975ca91e46?w=600&q=80",
       category: "creativity",
       difficulty: "easy" as const,
       players: {
@@ -145,7 +178,15 @@ const GameCenter = ({
       isFeatured: true,
     },
   ],
-  categories = ["All", "Quiz", "Creativity", "Memory", "Action", "Strategy", "Puzzle"],
+  categories = [
+    "All",
+    "Quiz",
+    "Creativity",
+    "Memory",
+    "Action",
+    "Strategy",
+    "Puzzle",
+  ],
   onPlayGame = () => {},
   onBack = () => {},
 }: GameCenterProps) => {
@@ -205,11 +246,19 @@ const GameCenter = ({
             <h2 className="text-xl font-bold">Game Center</h2>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1"
+            >
               <Trophy className="h-4 w-4" />
               <span>Leaderboards</span>
             </Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-1"
+            >
               <Users className="h-4 w-4" />
               <span>Invite Friends</span>
             </Button>
@@ -227,7 +276,10 @@ const GameCenter = ({
             />
           </div>
           <div className="flex gap-2">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <Select
+              value={selectedCategory}
+              onValueChange={setSelectedCategory}
+            >
               <SelectTrigger className="w-[150px]">
                 <div className="flex items-center gap-2">
                   <Filter className="h-4 w-4" />
@@ -243,7 +295,10 @@ const GameCenter = ({
               </SelectContent>
             </Select>
 
-            <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+            <Select
+              value={selectedDifficulty}
+              onValueChange={setSelectedDifficulty}
+            >
               <SelectTrigger className="w-[150px]">
                 <SelectValue placeholder="Difficulty" />
               </SelectTrigger>
@@ -316,7 +371,9 @@ const GameCenter = ({
                         </Badge>
                         <div className="flex items-center">
                           <Star className="h-4 w-4 text-yellow-500 mr-1" />
-                          <span className="text-sm">{game.rating.toFixed(1)}</span>
+                          <span className="text-sm">
+                            {game.rating.toFixed(1)}
+                          </span>
                         </div>
                       </div>
                     </CardHeader>
@@ -324,4 +381,121 @@ const GameCenter = ({
                       <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                         {game.description}
                       </p>
-                      <div className="flex justify-between items-center text-xs
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          <span>{game.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-3 w-3" />
+                          <span>
+                            {game.players.min}-{game.players.max} players
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <Badge
+                          className={`${getDifficultyColor(game.difficulty)} text-white text-xs`}
+                        >
+                          {game.difficulty.toUpperCase()}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="p-3 pt-0">
+                      <Button
+                        className="w-full"
+                        onClick={() => onPlayGame(game.id)}
+                      >
+                        Play Game
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Other tab contents would be similar but filtered differently */}
+          <TabsContent value="featured" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {sortedGames
+                .filter((game) => game.isFeatured)
+                .map((game) => (
+                  <Card key={game.id} className="overflow-hidden">
+                    {/* Same card content as above */}
+                    <div className="relative">
+                      <img
+                        src={game.image}
+                        alt={game.title}
+                        className="w-full h-48 object-cover"
+                      />
+                      {game.isNew && (
+                        <Badge className="absolute top-2 left-2 bg-blue-500">
+                          NEW
+                        </Badge>
+                      )}
+                      {game.isFeatured && (
+                        <Badge className="absolute top-2 right-2 bg-purple-500">
+                          FEATURED
+                        </Badge>
+                      )}
+                    </div>
+                    <CardHeader className="p-3 pb-0">
+                      <CardTitle className="text-base line-clamp-1">
+                        {game.title}
+                      </CardTitle>
+                      <div className="flex items-center justify-between mt-1">
+                        <Badge variant="outline" className="capitalize">
+                          {game.category}
+                        </Badge>
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 text-yellow-500 mr-1" />
+                          <span className="text-sm">
+                            {game.rating.toFixed(1)}
+                          </span>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-3 pt-2">
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                        {game.description}
+                      </p>
+                      <div className="flex justify-between items-center text-xs">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          <span>{game.duration}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="h-3 w-3" />
+                          <span>
+                            {game.players.min}-{game.players.max} players
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <Badge
+                          className={`${getDifficultyColor(game.difficulty)} text-white text-xs`}
+                        >
+                          {game.difficulty.toUpperCase()}
+                        </Badge>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="p-3 pt-0">
+                      <Button
+                        className="w-full"
+                        onClick={() => onPlayGame(game.id)}
+                      >
+                        Play Game
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default GameCenter;

@@ -290,7 +290,8 @@ const AdvancedAdminPanel = ({
   const [statusFilter, setStatusFilter] = useState("all");
   const [showUserDialog, setShowUserDialog] = useState(false);
   const [showContentDialog, setShowContentDialog] = useState(false);
-  const [showSystemSettingsDialog, setShowSystemSettingsDialog] = useState(false);
+  const [showSystemSettingsDialog, setShowSystemSettingsDialog] =
+    useState(false);
   const [showSubscriptionDialog, setShowSubscriptionDialog] = useState(false);
 
   // Filter users based on search query and status filter
@@ -427,7 +428,10 @@ const AdvancedAdminPanel = ({
               <Users className="h-4 w-4" />
               Users
             </TabsTrigger>
-            <TabsTrigger value="subscriptions" className="flex items-center gap-2">
+            <TabsTrigger
+              value="subscriptions"
+              className="flex items-center gap-2"
+            >
               <CreditCard className="h-4 w-4" />
               Subscriptions
             </TabsTrigger>
@@ -548,10 +552,16 @@ const AdvancedAdminPanel = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Server Status</span>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="font-medium">Server Status</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Current operational status
+                        </p>
+                      </div>
                       {getStatusBadge(systemData.serverStatus)}
                     </div>
+                    <Separator />
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-sm">CPU Usage</span>
@@ -568,7 +578,10 @@ const AdvancedAdminPanel = ({
                           {systemData.memoryUsage}%
                         </span>
                       </div>
-                      <Progress value={systemData.memoryUsage} className="h-2" />
+                      <Progress
+                        value={systemData.memoryUsage}
+                        className="h-2"
+                      />
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
@@ -578,30 +591,6 @@ const AdvancedAdminPanel = ({
                         </span>
                       </div>
                       <Progress value={systemData.diskUsage} className="h-2" />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Active Connections</span>
-                      <span className="text-sm font-medium">
-                        {systemData.activeConnections}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Response Time</span>
-                      <span className="text-sm font-medium">
-                        {systemData.responseTime} ms
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Error Rate</span>
-                      <span className="text-sm font-medium">
-                        {systemData.errorRate}%
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Last Backup</span>
-                      <span className="text-sm font-medium">
-                        {systemData.lastBackup}
-                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -640,25 +629,35 @@ const AdvancedAdminPanel = ({
                       <TableCell>IP: 192.168.1.1, Browser: Chrome</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">Content Flagged</TableCell>
+                      <TableCell className="font-medium">
+                        Content Flagged
+                      </TableCell>
                       <TableCell>System</TableCell>
                       <TableCell>15 minutes ago</TableCell>
-                      <TableCell>Content ID: 2, Reason: Inappropriate</TableCell>
+                      <TableCell>
+                        Content ID: 2, Reason: Inappropriate
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">New Subscription</TableCell>
+                      <TableCell className="font-medium">
+                        New Subscription
+                      </TableCell>
                       <TableCell>Jane Cooper</TableCell>
                       <TableCell>1 hour ago</TableCell>
                       <TableCell>Plan: Pro, Amount: $49.99</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">User Registered</TableCell>
+                      <TableCell className="font-medium">
+                        User Registered
+                      </TableCell>
                       <TableCell>Cameron Williamson</TableCell>
                       <TableCell>3 hours ago</TableCell>
                       <TableCell>Source: Direct</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell className="font-medium">System Backup</TableCell>
+                      <TableCell className="font-medium">
+                        System Backup
+                      </TableCell>
                       <TableCell>Automated</TableCell>
                       <TableCell>6 hours ago</TableCell>
                       <TableCell>Size: 2.3GB, Duration: 8 minutes</TableCell>
@@ -667,9 +666,7 @@ const AdvancedAdminPanel = ({
                 </Table>
               </CardContent>
               <CardFooter className="flex justify-end">
-                <Button variant="outline">
-                  View All Activity
-                </Button>
+                <Button variant="outline">View All Activity</Button>
               </CardFooter>
             </Card>
           </TabsContent>
@@ -764,7 +761,9 @@ const AdvancedAdminPanel = ({
                               "None"
                             )}
                           </TableCell>
-                          <TableCell>{content.views?.toLocaleString() || "N/A"}</TableCell>
+                          <TableCell>
+                            {content.views?.toLocaleString() || "N/A"}
+                          </TableCell>
                           <TableCell>{content.createdAt}</TableCell>
                           <TableCell className="text-right">
                             <div className="flex justify-end gap-2">
@@ -988,7 +987,9 @@ const AdvancedAdminPanel = ({
                             <Badge variant="outline">{user.role}</Badge>
                           </TableCell>
                           <TableCell>{getStatusBadge(user.status)}</TableCell>
-                          <TableCell>{getSubscriptionBadge(user.subscription || "None")}</TableCell>
+                          <TableCell>
+                            {getSubscriptionBadge(user.subscription || "None")}
+                          </TableCell>
                           <TableCell>
                             {user.twoFactorEnabled ? (
                               <Badge variant="default" className="bg-green-500">
@@ -1100,7 +1101,9 @@ const AdvancedAdminPanel = ({
                     <Progress value={65} className="h-2" />
                     <Separator />
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Users with Strong Passwords</span>
+                      <span className="text-sm">
+                        Users with Strong Passwords
+                      </span>
                       <span className="text-sm font-medium">78%</span>
                     </div>
                     <Progress value={78} className="h-2" />
@@ -1124,7 +1127,9 @@ const AdvancedAdminPanel = ({
           {/* Subscriptions Tab */}
           <TabsContent value="subscriptions" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-semibold">Subscription Management</h2>
+              <h2 className="text-2xl font-semibold">
+                Subscription Management
+              </h2>
               <Button onClick={() => setShowSubscriptionDialog(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create Subscription Plan
@@ -1135,10 +1140,17 @@ const AdvancedAdminPanel = ({
               <Card>
                 <CardHeader>
                   <CardTitle>Standard Plan</CardTitle>
-                  <CardDescription>Basic features for casual users</CardDescription>
+                  <CardDescription>
+                    Basic features for casual users
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-4">$9.99<span className="text-sm font-normal text-muted-foreground">/month</span></div>
+                  <div className="text-3xl font-bold mb-4">
+                    $9.99
+                    <span className="text-sm font-normal text-muted-foreground">
+                      /month
+                    </span>
+                  </div>
                   <ul className="space-y-2 mb-6">
                     <li className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -1183,14 +1195,23 @@ const AdvancedAdminPanel = ({
                 <CardHeader>
                   <Badge className="mb-2 bg-primary">Most Popular</Badge>
                   <CardTitle>Pro Plan</CardTitle>
-                  <CardDescription>Advanced features for creators</CardDescription>
+                  <CardDescription>
+                    Advanced features for creators
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-4">$24.99<span className="text-sm font-normal text-muted-foreground">/month</span></div>
+                  <div className="text-3xl font-bold mb-4">
+                    $24.99
+                    <span className="text-sm font-normal text-muted-foreground">
+                      /month
+                    </span>
+                  </div>
                   <ul className="space-y-2 mb-6">
                     <li className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                      <span className="text-sm">Advanced AI image generation</span>
+                      <span className="text-sm">
+                        Advanced AI image generation
+                      </span>
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -1225,19 +1246,24 @@ const AdvancedAdminPanel = ({
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full">
-                    Edit Plan
-                  </Button>
+                  <Button className="w-full">Edit Plan</Button>
                 </CardFooter>
               </Card>
 
               <Card>
                 <CardHeader>
                   <CardTitle>Lifetime Plan</CardTitle>
-                  <CardDescription>One-time payment for unlimited access</CardDescription>
+                  <CardDescription>
+                    One-time payment for unlimited access
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold mb-4">$299.99<span className="text-sm font-normal text-muted-foreground">/lifetime</span></div>
+                  <div className="text-3xl font-bold mb-4">
+                    $299.99
+                    <span className="text-sm font-normal text-muted-foreground">
+                      /lifetime
+                    </span>
+                  </div>
                   <ul className="space-y-2 mb-6">
                     <li className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -1257,7 +1283,9 @@ const AdvancedAdminPanel = ({
                     </li>
                     <li className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                      <span className="text-sm">Early access to new features</span>
+                      <span className="text-sm">
+                        Early access to new features
+                      </span>
                     </li>
                   </ul>
                   <div className="space-y-2">
@@ -1290,7 +1318,9 @@ const AdvancedAdminPanel = ({
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <h3 className="text-lg font-medium mb-4">Subscription Distribution</h3>
+                    <h3 className="text-lg font-medium mb-4">
+                      Subscription Distribution
+                    </h3>
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
@@ -1317,7 +1347,9 @@ const AdvancedAdminPanel = ({
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-4">Monthly Recurring Revenue</h3>
+                    <h3 className="text-lg font-medium mb-4">
+                      Monthly Recurring Revenue
+                    </h3>
                     <div className="text-3xl font-bold mb-2">$23,367.90</div>
                     <div className="text-sm text-muted-foreground flex items-center">
                       <span className="text-green-500 mr-1">↑ 8.3%</span>
@@ -1336,25 +1368,35 @@ const AdvancedAdminPanel = ({
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-medium mb-4">Subscription Growth</h3>
+                    <h3 className="text-lg font-medium mb-4">
+                      Subscription Growth
+                    </h3>
                     <div className="space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">New Subscriptions (This Month)</span>
+                        <span className="text-sm">
+                          New Subscriptions (This Month)
+                        </span>
                         <span className="text-sm font-medium">124</span>
                       </div>
                       <Separator />
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Cancellations (This Month)</span>
+                        <span className="text-sm">
+                          Cancellations (This Month)
+                        </span>
                         <span className="text-sm font-medium">42</span>
                       </div>
                       <Separator />
                       <div className="flex justify-between items-center">
                         <span className="text-sm">Net Growth</span>
-                        <span className="text-sm font-medium text-green-500">+82</span>
+                        <span className="text-sm font-medium text-green-500">
+                          +82
+                        </span>
                       </div>
                       <Separator />
                       <div className="flex justify-between items-center">
-                        <span className="text-sm">Projected Annual Revenue</span>
+                        <span className="text-sm">
+                          Projected Annual Revenue
+                        </span>
                         <span className="text-sm font-medium">$280,414.80</span>
                       </div>
                     </div>
@@ -1389,7 +1431,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Two-Factor Authentication</h3>
-                      <p className="text-sm text-muted-foreground">Require 2FA for all admin accounts</p>
+                      <p className="text-sm text-muted-foreground">
+                        Require 2FA for all admin accounts
+                      </p>
                     </div>
                     <Switch checked={true} />
                   </div>
@@ -1397,7 +1441,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Password Requirements</h3>
-                      <p className="text-sm text-muted-foreground">Minimum 12 characters with special characters</p>
+                      <p className="text-sm text-muted-foreground">
+                        Minimum 12 characters with special characters
+                      </p>
                     </div>
                     <Switch checked={true} />
                   </div>
@@ -1405,7 +1451,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Session Timeout</h3>
-                      <p className="text-sm text-muted-foreground">Automatically log out after inactivity</p>
+                      <p className="text-sm text-muted-foreground">
+                        Automatically log out after inactivity
+                      </p>
                     </div>
                     <Select defaultValue="30">
                       <SelectTrigger className="w-[120px]">
@@ -1423,7 +1471,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Login Attempts</h3>
-                      <p className="text-sm text-muted-foreground">Maximum failed login attempts before lockout</p>
+                      <p className="text-sm text-muted-foreground">
+                        Maximum failed login attempts before lockout
+                      </p>
                     </div>
                     <Select defaultValue="5">
                       <SelectTrigger className="w-[120px]">
@@ -1438,7 +1488,9 @@ const AdvancedAdminPanel = ({
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full">Save Authentication Settings</Button>
+                  <Button className="w-full">
+                    Save Authentication Settings
+                  </Button>
                 </CardFooter>
               </Card>
 
@@ -1451,50 +1503,88 @@ const AdvancedAdminPanel = ({
                     <div className="space-y-4">
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium">Admin Login</span>
-                          <span className="text-xs text-muted-foreground">2 minutes ago</span>
+                          <span className="text-sm font-medium">
+                            Admin Login
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            2 minutes ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: robert@example.com | IP: 192.168.1.1 | Success</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: robert@example.com | IP: 192.168.1.1 | Success
+                        </p>
                       </div>
                       <Separator />
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium text-red-500">Failed Login Attempt</span>
-                          <span className="text-xs text-muted-foreground">15 minutes ago</span>
+                          <span className="text-sm font-medium text-red-500">
+                            Failed Login Attempt
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            15 minutes ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: unknown@example.com | IP: 203.0.113.1 | Failed</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: unknown@example.com | IP: 203.0.113.1 | Failed
+                        </p>
                       </div>
                       <Separator />
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium">Password Changed</span>
-                          <span className="text-xs text-muted-foreground">1 hour ago</span>
+                          <span className="text-sm font-medium">
+                            Password Changed
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            1 hour ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: jane@example.com | IP: 192.168.1.5</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: jane@example.com | IP: 192.168.1.5
+                        </p>
                       </div>
                       <Separator />
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium">2FA Enabled</span>
-                          <span className="text-xs text-muted-foreground">3 hours ago</span>
+                          <span className="text-sm font-medium">
+                            2FA Enabled
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            3 hours ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: brooklyn@example.com | IP: 192.168.1.8</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: brooklyn@example.com | IP: 192.168.1.8
+                        </p>
                       </div>
                       <Separator />
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium text-red-500">Multiple Failed Login Attempts</span>
-                          <span className="text-xs text-muted-foreground">5 hours ago</span>
+                          <span className="text-sm font-medium text-red-500">
+                            Multiple Failed Login Attempts
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            5 hours ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: esther@example.com | IP: 203.0.113.7 | Account Locked</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: esther@example.com | IP: 203.0.113.7 | Account
+                          Locked
+                        </p>
                       </div>
                       <Separator />
                       <div className="space-y-1">
                         <div className="flex justify-between">
-                          <span className="text-sm font-medium">Account Unlocked</span>
-                          <span className="text-xs text-muted-foreground">5 hours ago</span>
+                          <span className="text-sm font-medium">
+                            Account Unlocked
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            5 hours ago
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground">User: esther@example.com | By: robert@example.com (Admin)</p>
+                        <p className="text-xs text-muted-foreground">
+                          User: esther@example.com | By: robert@example.com
+                          (Admin)
+                        </p>
                       </div>
                     </div>
                   </ScrollArea>
@@ -1517,7 +1607,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">API Rate Limiting</h3>
-                      <p className="text-sm text-muted-foreground">Limit API requests per minute</p>
+                      <p className="text-sm text-muted-foreground">
+                        Limit API requests per minute
+                      </p>
                     </div>
                     <Select defaultValue="100">
                       <SelectTrigger className="w-[120px]">
@@ -1535,7 +1627,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">API Key Rotation</h3>
-                      <p className="text-sm text-muted-foreground">Automatically rotate API keys</p>
+                      <p className="text-sm text-muted-foreground">
+                        Automatically rotate API keys
+                      </p>
                     </div>
                     <Select defaultValue="90">
                       <SelectTrigger className="w-[120px]">
@@ -1553,7 +1647,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">CORS Settings</h3>
-                      <p className="text-sm text-muted-foreground">Control cross-origin resource sharing</p>
+                      <p className="text-sm text-muted-foreground">
+                        Control cross-origin resource sharing
+                      </p>
                     </div>
                     <Button variant="outline">
                       <Settings className="h-4 w-4 mr-2" />
@@ -1564,7 +1660,9 @@ const AdvancedAdminPanel = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="font-medium">Active API Keys</h3>
-                      <p className="text-sm text-muted-foreground">Currently active API keys</p>
+                      <p className="text-sm text-muted-foreground">
+                        Currently active API keys
+                      </p>
                     </div>
                     <Badge>12 Active</Badge>
                   </div>
@@ -1586,3 +1684,213 @@ const AdvancedAdminPanel = ({
           {/* System Tab */}
           <TabsContent value="system" className="space-y-6">
             <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold">System Settings</h2>
+              <Button>
+                <Server className="h-4 w-4 mr-2" />
+                Server Controls
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Server Status</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Server Status</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Current operational status
+                      </p>
+                    </div>
+                    {getStatusBadge(systemData.serverStatus)}
+                  </div>
+                  <Separator />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">CPU Usage</span>
+                      <span className="text-sm font-medium">
+                        {systemData.cpuUsage}%
+                      </span>
+                    </div>
+                    <Progress value={systemData.cpuUsage} className="h-2" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Memory Usage</span>
+                      <span className="text-sm font-medium">
+                        {systemData.memoryUsage}%
+                      </span>
+                    </div>
+                    <Progress value={systemData.memoryUsage} className="h-2" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Disk Usage</span>
+                      <span className="text-sm font-medium">
+                        {systemData.diskUsage}%
+                      </span>
+                    </div>
+                    <Progress value={systemData.diskUsage} className="h-2" />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setShowSystemSettingsDialog(true)}
+                  >
+                    <Settings className="h-4 w-4 mr-2" />
+                    System Settings
+                  </Button>
+                </CardFooter>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Maintenance</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Scheduled Maintenance</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Next maintenance window
+                      </p>
+                    </div>
+                    <Badge variant="outline">None Scheduled</Badge>
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Last Backup</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Database and file backup
+                      </p>
+                    </div>
+                    <span className="text-sm">{systemData.lastBackup}</span>
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-medium">Error Rate</h3>
+                      <p className="text-sm text-muted-foreground">
+                        System errors per minute
+                      </p>
+                    </div>
+                    <span className="text-sm">{systemData.errorRate}%</span>
+                  </div>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                  <Button variant="outline">Run Backup</Button>
+                  <Button variant="outline">View Logs</Button>
+                </CardFooter>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>System Configuration</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <h3 className="text-sm font-medium mb-2">Environment</h3>
+                      <Select defaultValue="production">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select environment" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="development">
+                            Development
+                          </SelectItem>
+                          <SelectItem value="staging">Staging</SelectItem>
+                          <SelectItem value="production">Production</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium mb-2">
+                        Cache Settings
+                      </h3>
+                      <Select defaultValue="normal">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select cache level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="minimal">Minimal</SelectItem>
+                          <SelectItem value="normal">Normal</SelectItem>
+                          <SelectItem value="aggressive">Aggressive</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div>
+                    <h3 className="text-sm font-medium mb-2">System Limits</h3>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Max File Upload Size</span>
+                        <Select defaultValue="10">
+                          <SelectTrigger className="w-[120px]">
+                            <SelectValue placeholder="Select size" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="5">5 MB</SelectItem>
+                            <SelectItem value="10">10 MB</SelectItem>
+                            <SelectItem value="20">20 MB</SelectItem>
+                            <SelectItem value="50">50 MB</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Max Concurrent Users</span>
+                        <Select defaultValue="1000">
+                          <SelectTrigger className="w-[120px]">
+                            <SelectValue placeholder="Select limit" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="500">500</SelectItem>
+                            <SelectItem value="1000">1,000</SelectItem>
+                            <SelectItem value="5000">5,000</SelectItem>
+                            <SelectItem value="10000">10,000</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm">Request Timeout</span>
+                        <Select defaultValue="30">
+                          <SelectTrigger className="w-[120px]">
+                            <SelectValue placeholder="Select timeout" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="15">15 sec</SelectItem>
+                            <SelectItem value="30">30 sec</SelectItem>
+                            <SelectItem value="60">60 sec</SelectItem>
+                            <SelectItem value="120">120 sec</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-end">
+                <Button variant="outline" className="mr-2">
+                  Reset to Defaults
+                </Button>
+                <Button>Save Configuration</Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default AdvancedAdminPanel;
