@@ -55,16 +55,61 @@ const AIGenerationTool = ({
   const [videoDuration, setVideoDuration] = useState(5);
   const [videoStyle, setVideoStyle] = useState("cinematic");
 
-  // Mock function to simulate content generation
+  // Function to generate AI content
   const generateContent = () => {
     setIsGenerating(true);
+
+    // Generate content based on prompt and active tab
+    const promptWords = prompt.split(" ");
+    let imageUrl = "";
+
+    if (activeTab === "image") {
+      // Generate different images based on prompt keywords
+      if (
+        promptWords.some((word) =>
+          ["nature", "landscape", "mountain", "forest", "ocean"].includes(
+            word.toLowerCase(),
+          ),
+        )
+      ) {
+        imageUrl =
+          "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80"; // Blue/purple abstract
+      } else if (
+        promptWords.some((word) =>
+          ["city", "urban", "building", "architecture"].includes(
+            word.toLowerCase(),
+          ),
+        )
+      ) {
+        imageUrl =
+          "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"; // Orange/yellow abstract
+      } else if (
+        promptWords.some((word) =>
+          ["portrait", "person", "face", "people"].includes(word.toLowerCase()),
+        )
+      ) {
+        imageUrl =
+          "https://images.unsplash.com/photo-1614102073832-030967418971?w=800&q=80"; // Pink/purple abstract
+      } else if (
+        promptWords.some((word) =>
+          ["tech", "digital", "future", "ai"].includes(word.toLowerCase()),
+        )
+      ) {
+        imageUrl =
+          "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80"; // Blue digital abstract
+      } else {
+        imageUrl =
+          "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80"; // Tech/digital abstract
+      }
+    }
 
     // Simulate API call delay
     setTimeout(() => {
       // Generate placeholder content based on the active tab
       const content =
         activeTab === "image"
-          ? `https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80`
+          ? imageUrl ||
+            `https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&q=80`
           : "https://example.com/placeholder-video.mp4";
 
       setGeneratedContent(content);

@@ -27,6 +27,7 @@ import {
   LogOut,
   Settings,
   User,
+  CreditCard,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -202,6 +203,13 @@ const Navbar = ({
                 >
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => (window.location.href = "/membership")}
+                >
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  <span>Membership</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
                   <Settings className="mr-2 h-4 w-4" />

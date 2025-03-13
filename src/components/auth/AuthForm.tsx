@@ -40,6 +40,8 @@ const AuthForm = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
+    // Redirect to home page after successful authentication
+    window.location.href = "/";
   };
 
   const togglePasswordVisibility = () => {

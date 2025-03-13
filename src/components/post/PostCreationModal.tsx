@@ -119,6 +119,14 @@ const PostCreationModal = ({
     onPost(postData);
     resetForm();
     onClose();
+
+    // Show success message
+    alert("Post created successfully!");
+
+    // Refresh the page to show the new post
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const resetForm = () => {

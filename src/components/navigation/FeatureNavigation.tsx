@@ -9,6 +9,7 @@ import {
   Heart,
   LayoutDashboard,
   Home as HomeIcon,
+  CreditCard,
 } from "lucide-react";
 
 interface FeatureNavigationProps {
@@ -54,6 +55,12 @@ const FeatureNavigation = ({
       name: "Dating",
       icon: <Heart className="h-5 w-5" />,
       path: "/dating",
+    },
+    {
+      id: "membership",
+      name: "Membership",
+      icon: <CreditCard className="h-5 w-5" />,
+      path: "/membership",
     },
     {
       id: "admin",

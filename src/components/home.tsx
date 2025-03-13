@@ -17,7 +17,7 @@ const Home = () => {
   const [showPostModal, setShowPostModal] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  // Effect to check for dark mode preference
+  // Effect to check for dark mode preference and authentication status
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isDark =
@@ -25,6 +25,10 @@ const Home = () => {
         window.matchMedia("(prefers-color-scheme: dark)").matches;
       setIsDarkMode(isDark);
       document.documentElement.classList.toggle("dark", isDark);
+
+      // Check if user is authenticated
+      const authStatus = localStorage.getItem("isAuthenticated") === "true";
+      setIsAuthenticated(authStatus);
     }
   }, []);
 
@@ -52,10 +56,21 @@ const Home = () => {
     // In a real app, this would call an authentication API
     setIsAuthenticated(true);
     setShowAuthForm(false);
+    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({
+        name: data.name || "Jane Cooper",
+        email: data.email,
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
+      }),
+    );
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("userData");
   };
 
   // Handle post creation

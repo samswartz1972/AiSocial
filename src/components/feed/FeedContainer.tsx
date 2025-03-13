@@ -135,7 +135,12 @@ const FeedContainer = ({
       <div className="p-4 border-b border-gray-200 dark:border-gray-800">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Feed</h2>
-          <CreatePostButton size="sm" />
+          <CreatePostButton
+            size="sm"
+            onClick={() =>
+              document.getElementById("create-post-button")?.click()
+            }
+          />
         </div>
         <Input
           placeholder="Search posts..."

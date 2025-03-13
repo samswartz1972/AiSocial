@@ -11,6 +11,7 @@ interface CreatePostButtonProps {
   label?: string;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  onClick?: () => void;
 }
 
 const CreatePostButton = ({
@@ -21,6 +22,7 @@ const CreatePostButton = ({
   label = "Create Post",
   isOpen = false,
   onOpenChange,
+  onClick,
 }: CreatePostButtonProps) => {
   const [open, setOpen] = React.useState(isOpen);
 
@@ -35,9 +37,11 @@ const CreatePostButton = ({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button
+          id="create-post-button"
           variant={variant}
           size={size}
           className={`bg-primary text-white hover:bg-primary/90 ${className}`}
+          onClick={onClick}
         >
           {showIcon && <Plus className="mr-2 h-4 w-4" />}
           {label}

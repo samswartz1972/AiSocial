@@ -7,6 +7,7 @@ import GamesPage from "../pages/GamesPage";
 import DatingPage from "../pages/DatingPage";
 import AdminPage from "../pages/AdminPage";
 import AdvancedAdminPage from "../pages/AdvancedAdminPage";
+import MembershipPage from "../pages/MembershipPage";
 
 const routes: RouteObject[] = [
   {
@@ -40,6 +41,10 @@ const routes: RouteObject[] = [
   {
     path: "/admin/advanced",
     element: <AdvancedAdminPage />,
+  },
+  {
+    path: "/membership",
+    element: <MembershipPage />,
   },
 ];
 
