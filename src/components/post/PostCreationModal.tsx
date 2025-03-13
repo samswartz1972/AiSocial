@@ -116,17 +116,52 @@ const PostCreationModal = ({
       postData.media = mediaContent;
     }
 
-    onPost(postData);
-    resetForm();
-    onClose();
+    // Create a new post object
+    const newPost = {
+      id: `user-${Date.now()}`,
+      user: {
+        name: user.name,
+        username: user.username,
+        avatar: user.avatar,
+      },
+      content: {
+        text: postText,
+        media: mediaContent,
+        createdAt: "Just now",
+      },
+      interactions: {
+        likes: 0,
+        comments: 0,
+        shares: 0,
+      },
+    };
 
-    // Show success message
-    alert("Post created successfully!");
+    // Save to localStorage
+    try {
+      const existingPosts = localStorage.getItem("userPosts");
+      let userPosts = [];
 
-    // Refresh the page to show the new post
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+      if (existingPosts) {
+        userPosts = JSON.parse(existingPosts);
+      }
+
+      userPosts.unshift(newPost); // Add new post at the beginning
+      localStorage.setItem("userPosts", JSON.stringify(userPosts));
+
+      onPost(postData);
+      resetForm();
+      onClose();
+
+      // Show success message without using alert
+      const event = new CustomEvent("post-created", { detail: newPost });
+      document.dispatchEvent(event);
+
+      // Redirect to home page to see the new post
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Failed to save post:", error);
+      alert("Failed to create post. Please try again.");
+    }
   };
 
   const resetForm = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "./layout/Layout";
 import AuthForm from "./auth/AuthForm";
 import FeedContainer from "./feed/FeedContainer";
@@ -10,6 +10,7 @@ import { useMediaQuery } from "../lib/utils";
 import { Button } from "./ui/button";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [showAuthForm, setShowAuthForm] = useState(false);
@@ -56,21 +57,36 @@ const Home = () => {
     // In a real app, this would call an authentication API
     setIsAuthenticated(true);
     setShowAuthForm(false);
+
+    // Create a username from the name or email
+    const username = data.name
+      ? `@${data.name.toLowerCase().replace(/\s+/g, "")}`
+      : `@${data.email.split("@")[0]}`;
+
+    // Store user data in localStorage
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem(
       "userData",
       JSON.stringify({
         name: data.name || "Jane Cooper",
+        username: username,
         email: data.email,
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`,
       }),
     );
+
+    // Redirect to home page after successful login
+    window.location.href = "/";
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("userData");
+    // Clear user posts when logging out
+    localStorage.removeItem("userPosts");
+    // Redirect to home page after logout
+    window.location.href = "/";
   };
 
   // Handle post creation
@@ -161,7 +177,7 @@ const Home = () => {
                     generator.
                   </p>
                   <Button
-                    onClick={handleSignup}
+                    onClick={() => navigate("/membership")}
                     variant="link"
                     className="text-primary font-medium flex items-center p-0"
                   >

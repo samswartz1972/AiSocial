@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Post from "./Post";
 import CreatePostButton from "./CreatePostButton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
@@ -7,6 +7,7 @@ import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
 import { Compass, Home, TrendingUp, Users } from "lucide-react";
+import { useToast } from "../ui/use-toast";
 
 interface FeedContainerProps {
   posts?: Array<{
@@ -103,31 +104,19 @@ const FeedContainer = ({
   activeTab = "for-you",
   onTabChange = () => {},
 }: FeedContainerProps) => {
+  const { toast } = useToast();
   const [currentTab, setCurrentTab] = useState(activeTab);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredPosts, setFilteredPosts] = useState(posts);
-
-  useEffect(() => {
-    setCurrentTab(activeTab);
-  }, [activeTab]);
-
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter(
-        (post) =>
-          post.content.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.user.username.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-      setFilteredPosts(filtered);
-    }
-  }, [searchQuery, posts]);
+  const [userPosts, setUserPosts] = useState<typeof posts>([]);
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value);
     onTabChange(value);
+  };
+
+  const refreshFeed = () => {
+    setFilteredPosts(posts);
   };
 
   return (
@@ -175,7 +164,11 @@ const FeedContainer = ({
               ) : (
                 <div className="text-center py-10">
                   <p className="text-muted-foreground">No posts found</p>
-                  <Button variant="outline" className="mt-4">
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={refreshFeed}
+                  >
                     Refresh Feed
                   </Button>
                 </div>

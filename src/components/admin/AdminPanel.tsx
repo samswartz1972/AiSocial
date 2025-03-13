@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
 import {
   Card,
@@ -7,6 +7,7 @@ import {
   CardContent,
   CardFooter,
 } from "../ui/card";
+import { Progress } from "../ui/progress";
 import {
   Table,
   TableHeader,
@@ -77,6 +78,16 @@ interface AdminPanelProps {
     contentEngagement: number;
     dailyActiveUsers: number;
   };
+}
+
+// Define types for admin actions
+interface AdminAction {
+  id: string;
+  action: string;
+  user: string;
+  target: string;
+  timestamp: string;
+  status: string;
 }
 
 const AdminPanel = ({
@@ -183,6 +194,77 @@ const AdminPanel = ({
   const [statusFilter, setStatusFilter] = useState("all");
   const [showUserDialog, setShowUserDialog] = useState(false);
   const [showContentDialog, setShowContentDialog] = useState(false);
+  const [adminActions, setAdminActions] = useState<AdminAction[]>([]);
+  const [systemStatus, setSystemStatus] = useState({
+    cpuUsage: 42,
+    memoryUsage: 68,
+    activeUsers: 124,
+    errorRate: 0.5,
+    lastBackup: new Date().toISOString(),
+  });
+
+  // Load admin actions from localStorage
+  useEffect(() => {
+    const savedActions = localStorage.getItem("adminActions");
+    if (savedActions) {
+      try {
+        setAdminActions(JSON.parse(savedActions));
+      } catch (error) {
+        console.error("Failed to parse admin actions:", error);
+      }
+    } else {
+      // Initialize with some default actions if none exist
+      const defaultActions: AdminAction[] = [
+        {
+          id: "1",
+          action: "User Suspended",
+          user: "Admin",
+          target: "Esther Howard",
+          timestamp: new Date().toISOString(),
+          status: "Completed",
+        },
+        {
+          id: "2",
+          action: "Content Removed",
+          user: "Admin",
+          target: "Inappropriate content",
+          timestamp: new Date().toISOString(),
+          status: "Completed",
+        },
+      ];
+      setAdminActions(defaultActions);
+      localStorage.setItem("adminActions", JSON.stringify(defaultActions));
+    }
+
+    // Simulate system status updates
+    const interval = setInterval(() => {
+      setSystemStatus((prev) => ({
+        cpuUsage: Math.floor(Math.random() * 30) + 30,
+        memoryUsage: Math.floor(Math.random() * 20) + 60,
+        activeUsers: prev.activeUsers + Math.floor(Math.random() * 10) - 5,
+        errorRate: Math.random() * 1,
+        lastBackup: prev.lastBackup,
+      }));
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Record admin action
+  const recordAction = (action: string, target: string) => {
+    const newAction: AdminAction = {
+      id: Date.now().toString(),
+      action,
+      user: "Admin",
+      target,
+      timestamp: new Date().toISOString(),
+      status: "Completed",
+    };
+
+    const updatedActions = [newAction, ...adminActions];
+    setAdminActions(updatedActions);
+    localStorage.setItem("adminActions", JSON.stringify(updatedActions));
+  };
 
   // Filter users based on search query and status filter
   const filteredUsers = userData.filter((user) => {
@@ -362,16 +444,43 @@ const AdminPanel = ({
                           <TableCell>{content.createdAt}</TableCell>
                           <TableCell className="text-right">
                             <div className="flex justify-end gap-2">
-                              <Button variant="ghost" size="icon">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  recordAction("Content Viewed", content.title);
+                                  setShowContentDialog(true);
+                                }}
+                              >
                                 <Eye className="h-4 w-4" />
                               </Button>
                               {content.status !== "removed" && (
-                                <Button variant="ghost" size="icon">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    recordAction(
+                                      "Content Removed",
+                                      content.title,
+                                    );
+                                    alert(`${content.title} has been removed`);
+                                  }}
+                                >
                                   <Trash className="h-4 w-4 text-red-500" />
                                 </Button>
                               )}
                               {content.status === "flagged" && (
-                                <Button variant="ghost" size="icon">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    recordAction(
+                                      "Content Approved",
+                                      content.title,
+                                    );
+                                    alert(`${content.title} has been approved`);
+                                  }}
+                                >
                                   <CheckCircle className="h-4 w-4 text-green-500" />
                                 </Button>
                               )}
@@ -464,11 +573,25 @@ const AdminPanel = ({
                                 <Edit className="h-4 w-4" />
                               </Button>
                               {user.status === "active" ? (
-                                <Button variant="ghost" size="icon">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    recordAction("User Suspended", user.name);
+                                    alert(`${user.name} has been suspended`);
+                                  }}
+                                >
                                   <XCircle className="h-4 w-4 text-red-500" />
                                 </Button>
                               ) : user.status === "suspended" ? (
-                                <Button variant="ghost" size="icon">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => {
+                                    recordAction("User Activated", user.name);
+                                    alert(`${user.name} has been activated`);
+                                  }}
+                                >
                                   <CheckCircle className="h-4 w-4 text-green-500" />
                                 </Button>
                               ) : null}
@@ -485,6 +608,72 @@ const AdminPanel = ({
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-semibold">System Status</h2>
+              <Badge
+                variant={systemStatus.errorRate < 1 ? "outline" : "destructive"}
+              >
+                {systemStatus.errorRate < 1 ? "Healthy" : "Issues Detected"}
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    System Resources
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm">CPU Usage</span>
+                      <span className="text-sm font-medium">
+                        {systemStatus.cpuUsage}%
+                      </span>
+                    </div>
+                    <Progress value={systemStatus.cpuUsage} className="h-2" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm">Memory Usage</span>
+                      <span className="text-sm font-medium">
+                        {systemStatus.memoryUsage}%
+                      </span>
+                    </div>
+                    <Progress
+                      value={systemStatus.memoryUsage}
+                      className="h-2"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">
+                    Admin Actions Log
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="h-[150px] overflow-auto">
+                  <div className="space-y-2">
+                    {adminActions.slice(0, 5).map((action) => (
+                      <div key={action.id} className="text-sm border-b pb-2">
+                        <div className="flex justify-between">
+                          <span className="font-medium">{action.action}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {new Date(action.timestamp).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          By {action.user} • Target: {action.target}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
             <h2 className="text-2xl font-semibold">Platform Analytics</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

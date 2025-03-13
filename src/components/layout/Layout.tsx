@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import Navbar from "./Navbar";
 
 interface LayoutProps {
@@ -16,6 +16,21 @@ interface LayoutProps {
   onCreatePost?: () => void;
 }
 
+// Fix for duplicate rendering issue
+const fixDuplicateRendering = () => {
+  // Check if we're in a browser environment
+  if (typeof window !== "undefined") {
+    // Find all duplicate elements that might be causing the issue
+    const mainElements = document.querySelectorAll("main");
+    if (mainElements.length > 1) {
+      // Remove duplicates, keeping only the first one
+      for (let i = 1; i < mainElements.length; i++) {
+        mainElements[i].remove();
+      }
+    }
+  }
+};
+
 const Layout = ({
   children,
   isAuthenticated = false,
@@ -30,6 +45,11 @@ const Layout = ({
   onLogout = () => {},
   onCreatePost = () => {},
 }: LayoutProps) => {
+  // Fix duplicate rendering issue on component mount
+  useEffect(() => {
+    fixDuplicateRendering();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       <Navbar

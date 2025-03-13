@@ -11,6 +11,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* Add other explicit routes here if needed */}
+          {import.meta.env.VITE_TEMPO === "true" && (
+            <Route path="/tempobook/*" />
+          )}
         </Routes>
         {/* Use route objects */}
         {useRoutes(routes)}

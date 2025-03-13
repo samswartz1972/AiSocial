@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import {
   ShoppingCart,
@@ -19,6 +19,7 @@ interface FeatureNavigationProps {
 const FeatureNavigation = ({
   currentFeature = "home",
 }: FeatureNavigationProps) => {
+  const navigate = useNavigate();
   const features = [
     {
       id: "home",
@@ -76,12 +77,11 @@ const FeatureNavigation = ({
         <Button
           key={feature.id}
           variant={currentFeature === feature.id ? "default" : "outline"}
-          asChild
+          onClick={() => navigate(feature.path)}
+          className="flex items-center gap-2"
         >
-          <Link to={feature.path} className="flex items-center gap-2">
-            {feature.icon}
-            <span>{feature.name}</span>
-          </Link>
+          {feature.icon}
+          <span>{feature.name}</span>
         </Button>
       ))}
     </div>

@@ -28,6 +28,7 @@ import {
   Settings,
   User,
   CreditCard,
+  LayoutDashboard,
 } from "lucide-react";
 
 interface NavbarProps {
@@ -210,6 +211,13 @@ const Navbar = ({
                 >
                   <CreditCard className="mr-2 h-4 w-4" />
                   <span>Membership</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => (window.location.href = "/admin")}
+                >
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Admin Panel</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">
                   <Settings className="mr-2 h-4 w-4" />
